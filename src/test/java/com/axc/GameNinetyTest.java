@@ -86,27 +86,27 @@ public class GameNinetyTest {
                 setNumber.stream().sorted().collect(Collectors.toList()));
     }
 
-//    @Test
-//    public void checkColumnTwoToEightContainsNumbersToTen() {
-//
-//        for (int c = 1; c < 9; c++) {
-//
-//            Set<Integer> setNumber = new HashSet<>(10);
-//
-//            for (int r = 0; r < 18; r++) {
-//
-//                setNumber.add(RC[r][c]);
-//            }
-//
-//            setNumber.remove(0);
-//
-//            Assert.assertEquals(10, setNumber.size());
-//
-//            Assert.assertEquals(
-//                    IntStream.rangeClosed(c * 10, c * 10 + 9).boxed().sorted().collect(Collectors.toList()),
-//                    setNumber.stream().sorted().collect(Collectors.toList()));
-//        }
-//    }
+    @Test
+    public void checkColumnTwoToEightContainsNumbersToTen() {
+
+        for (int c = 1; c < 8; c++) {
+
+            Set<Integer> setNumber = new HashSet<>(10);
+
+            for (int r = 0; r < 18; r++) {
+
+                setNumber.add(RC[r][c]);
+            }
+
+            setNumber.remove(0);
+
+            Assert.assertEquals(10, setNumber.size());
+
+            Assert.assertEquals(
+                    IntStream.rangeClosed(c * 10, c * 10 + 9).boxed().sorted().collect(Collectors.toList()),
+                    setNumber.stream().sorted().collect(Collectors.toList()));
+        }
+    }
 
     @Test
     public void checkLastColumnContainsNumbersToEleven() {
