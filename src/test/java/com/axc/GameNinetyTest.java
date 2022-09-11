@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -36,8 +37,6 @@ public class GameNinetyTest {
                         ).collect(Collectors.toList());
 
         rows.forEach(oneRowList -> {
-
-            System.out.println(" TEST >> oneRowList = " + oneRowList.toString());
 
             Set<Integer> setRow = new HashSet<>(oneRowList);
 
@@ -98,7 +97,7 @@ public class GameNinetyTest {
                 setNumber.add(RC[r][c]);
             }
 
-            setNumber.remove(0);
+            setNumber.remove(Integer.valueOf(0));
 
             Assert.assertEquals(10, setNumber.size());
 
@@ -124,6 +123,53 @@ public class GameNinetyTest {
         Assert.assertEquals(
                 IntStream.rangeClosed(80, 90).boxed().sorted().collect(Collectors.toList()),
                 setNumber.stream().sorted().collect(Collectors.toList()));
+    }
+
+    @Test
+    public void checkArrangedInAscendingOrder() {
+
+        List<Integer> columnTicketList = new ArrayList<>();
+
+        List<List<Integer>> rows =
+                Arrays.stream(RC).
+                        map(rowArray ->
+                                Arrays.stream(rowArray)
+                                        .boxed()
+                                        .collect(Collectors.toList())
+                        ).collect(Collectors.toList());
+
+        for (int c = 0; c < 9; c++) {
+
+            for (int r = 0; r < 18; r = r + 3) {
+
+                columnTicketList.add(rows.get(r).get(c));
+                columnTicketList.add(rows.get(r + 1).get(c));
+                columnTicketList.add(rows.get(r + 2).get(c));
+
+                Assert.assertEquals(columnTicketList,
+                        columnTicketList.stream().sorted().collect(Collectors.toList()));
+            }
+        }
+    }
+
+    @Test
+    public void noDuplicateNumbersToNinetyInStripTest() {
+
+        Set<Integer> setAll = new HashSet<>(91); // a set with all numbers cumulated from 6 tickets
+
+        List<List<Integer>> rows =
+                Arrays.stream(RC).
+                        map(rowArray ->
+                                Arrays.stream(rowArray)
+                                        .boxed()
+                                        .collect(Collectors.toList())
+                        ).collect(Collectors.toList());
+
+        rows.forEach(setAll::addAll);
+
+        setAll.remove(0);
+
+        Assert.assertEquals(90, setAll.size());  // all 90 numbers used in 6 tickets are distinct
     }
 
 }
